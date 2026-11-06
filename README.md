@@ -2,6 +2,9 @@
 
 PASE estimates molecular associations within individual patients and summarizes them across a single-cell cohort.
 
+Read the [online documentation](https://pase-software.readthedocs.io/en/latest/)
+for installation, the API and the statistical meaning of each parameter.
+
 ## Installation
 
 Use Python 3.10 or later in a fresh environment. Install the published release

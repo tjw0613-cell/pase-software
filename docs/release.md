@@ -8,13 +8,14 @@ Version 1.0.0 is published on
 The [publication workflow](https://github.com/tjw0613-cell/pase-software/actions/runs/42162951531)
 passed its cross-platform checks and PyPI upload. A separate Windows environment
 installed the public PyPI wheel and ran the equal, RE-HKSJ and EB examples.
-Read the Docs has not yet been registered or published, and Bioconda publication
-has not been requested. Never commit API tokens.
+The [online documentation](https://pase-software.readthedocs.io/en/latest/)
+is published on Read the Docs. Its `latest` version tracks the `main` branch.
+A Bioconda package has not yet been published. Never commit API tokens.
 
 The software repository is `tjw0613-cell/pase-software`; the manuscript
 repository is `tjw0613-cell/pase-reproducibility`.
-Keep each checkout in its own repository. Add the actual documentation URL
-to `pyproject.toml` once the documentation site exists.
+Keep each checkout in its own repository. The documentation URL is recorded
+in `pyproject.toml`; published PyPI 1.0.0 metadata remains unchanged.
 Do not reuse the earlier manuscript archive DOI as this version's software DOI.
 
 ## Build and check
@@ -59,11 +60,16 @@ its installation instructions. See the official
 
 ## Read the Docs
 
-Import the real software repository into Read the Docs. The root
-`.readthedocs.yaml` selects Python, installs the documentation extra and builds
-Sphinx with warnings treated as errors. Activate the version tag and verify the
-public API pages after the build succeeds. The project URL is assigned by
-Read the Docs; no live URL is claimed in this source checkout.
+The project is [pase-software](https://app.readthedocs.org/projects/pase-software/).
+Its public documentation is available at
+https://pase-software.readthedocs.io/en/latest/.
+The root `.readthedocs.yaml` selects Python, installs the documentation extra
+and builds Sphinx with warnings treated as errors. The initial successful
+build was [35689123](https://app.readthedocs.org/projects/pase-software/builds/35689123/),
+from commit `f15b4ad5748de1279d0b5b640f07b1db4f51a530`.
+The `latest` documentation follows `main`; it is not an immutable version archive.
+For future tagged documentation, activate the tag and verify its own public URL
+after a successful build. Do not move an existing release tag.
 See the [configuration reference](https://docs.readthedocs.com/platform/stable/config-file/v2.html).
 
 ## Bioconda

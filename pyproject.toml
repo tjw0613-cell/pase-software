@@ -31,6 +31,7 @@ dependencies = [
 ]
 
 [project.urls]
+Documentation = "https://pase-software.readthedocs.io/en/latest/"
 Source = "https://github.com/tjw0613-cell/pase-software"
 Issues = "https://github.com/tjw0613-cell/pase-software/issues"
 Reproduction = "https://github.com/tjw0613-cell/pase-reproducibility"
