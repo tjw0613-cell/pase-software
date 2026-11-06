@@ -1,14 +1,19 @@
 # Maintainer release instructions
 
-## What must be configured outside this checkout
+## Release status
 
-The source is prepared as version 1.0.0. A local wheel, CI configuration or
-documentation build is not a public software release. The maintainer must
-connect actual GitHub, PyPI and Read the Docs accounts. Never commit API tokens.
+Version 1.0.0 is published on
+[PyPI](https://pypi.org/project/pase-framework/1.0.0/) and
+[GitHub](https://github.com/tjw0613-cell/pase-software/releases/tag/v1.0.0).
+The [publication workflow](https://github.com/tjw0613-cell/pase-software/actions/runs/42162951531)
+passed its cross-platform checks and PyPI upload. A separate Windows environment
+installed the public PyPI wheel and ran the equal, RE-HKSJ and EB examples.
+Read the Docs has not yet been registered or published, and Bioconda publication
+has not been requested. Never commit API tokens.
 
 The software repository is `tjw0613-cell/pase-software`; the manuscript
 repository is `tjw0613-cell/pase-reproducibility`.
-Push each checkout to its own repository. Add the actual documentation URL
+Keep each checkout in its own repository. Add the actual documentation URL
 to `pyproject.toml` once the documentation site exists.
 Do not reuse the earlier manuscript archive DOI as this version's software DOI.
 
@@ -24,20 +29,19 @@ python -m twine check dist/*
 ```
 
 Inspect the actual GitHub Actions results on Linux, macOS and Windows. Fix
-failures before tagging the final release. Version 1.0.0 is already set in
-both package metadata and `pase.__version__`; the GitHub release tag must be
-`v1.0.0`.
+failures before tagging a release. For a future version, update both package
+metadata and `pase.__version__`, then use the matching GitHub version tag.
+Do not move the published `v1.0.0` tag or replace its distributions.
 
 ## PyPI
 
-The distribution name is **pase-framework**. `pase` is already used by an
-unrelated project. A name lookup does not reserve a name; registration remains
-subject to PyPI's checks.
+The published distribution name is **pase-framework**. `pase` is used by an
+unrelated project and must not be substituted in installation commands.
 
-Configure a pending Trusted Publisher for the new project in PyPI using the
-GitHub owner `tjw0613-cell`, repository `pase-software`, workflow `publish.yml` and
-environment `pypi`. Configure the corresponding TestPyPI publisher with
-environment `testpypi`. Add those environments to the GitHub repository.
+The production Trusted Publisher uses GitHub owner `tjw0613-cell`, repository
+`pase-software`, workflow `publish.yml` and environment `pypi`. For TestPyPI,
+configure a separate publisher with environment `testpypi` before using the
+manual testing workflow.
 
 The manual **Publish release** workflow uploads to TestPyPI. A **published
 GitHub release** triggers the same tests and then uploads to PyPI. The publisher
@@ -49,8 +53,8 @@ five-line example in a fresh environment using:
 python -m pip install pase-framework==1.0.0
 ```
 
-Update the README installation section only after that command has succeeded
-against the intended public index. See the official
+Repeat the clean installation check for each future version before updating
+its installation instructions. See the official
 [Trusted Publisher guide](https://docs.pypi.org/trusted-publishers/using-a-publisher/).
 
 ## Read the Docs

@@ -4,21 +4,22 @@ PASE estimates molecular associations within individual patients and summarizes 
 
 ## Installation
 
-Use Python 3.10 or later in a fresh environment. From this source checkout:
+Use Python 3.10 or later in a fresh environment. Install the published release
+from [PyPI](https://pypi.org/project/pase-framework/1.0.0/):
 
 ```bash
-git clone https://github.com/tjw0613-cell/pase-software.git
-cd pase-software
 python -m venv .venv
 # Windows: .venv\Scripts\activate
 # macOS/Linux: source .venv/bin/activate
-python -m pip install .
+python -m pip install pase-framework==1.0.0
 ```
 
 The distribution is named **pase-framework**, but the Python import is `pase`.
 The unrelated audio package named `pase` on PyPI uses the same import name;
-do not install both in one environment. This source release does not by itself
-confirm availability on PyPI.
+do not install both in one environment. The
+[v1.0.0 release](https://github.com/tjw0613-cell/pase-software/releases/tag/v1.0.0)
+is also available on GitHub. For development, clone this repository and use
+`python -m pip install -e ".[test]"`.
 
 ## Five-line example
 
@@ -34,8 +35,10 @@ The bundled GSE234933 subset contains real cells and works without a download.
 The four-gene target above illustrates the interface; it is not the current
 manuscript's published 15-gene signature. The complete tutorial is
 [examples/gse234933_quickstart.ipynb](examples/gse234933_quickstart.ipynb).
-Install the notebook tools with `python -m pip install ".[tutorial]"`, then run
-`jupyter lab examples/gse234933_quickstart.ipynb`.
+Install the notebook tools with
+`python -m pip install "pase-framework[tutorial]==1.0.0"`. Download the notebook
+or clone this repository, then run
+`jupyter lab examples/gse234933_quickstart.ipynb` from the checkout.
 
 ## Input format
 
@@ -81,8 +84,9 @@ statistical adequacy. See [statistical details](docs/statistics.md).
 
 ## Citation
 
-For this code, cite the authors, PASE software version **1.0.0**, and the release
-URL or version DOI that accompanies the copy used. Machine-readable author
+For this code, cite the authors, PASE software version **1.0.0**, and its
+[release URL](https://github.com/tjw0613-cell/pase-software/releases/tag/v1.0.0).
+Machine-readable author
 information is in [CITATION.cff](CITATION.cff). An earlier analysis archive is
 available at [Zenodo v3](https://doi.org/10.5281/zenodo.23032874); that DOI does
 not identify this 1.0.0 software release.

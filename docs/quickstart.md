@@ -1,12 +1,12 @@
 # Quick start
 
-From the source checkout, create and activate an environment and install PASE:
+Create and activate an environment, then install the published PASE release:
 
 ```bash
 python -m venv .venv
 # Windows: .venv\Scripts\activate
 # macOS/Linux: source .venv/bin/activate
-python -m pip install ".[tutorial]"
+python -m pip install "pase-framework[tutorial]==1.0.0"
 ```
 
 The package distribution is `pase-framework`; the Python module is `pase`.
@@ -30,7 +30,9 @@ This is an interface example using real cells, not a full-cohort analysis.
 The four-gene target demonstrates module input; the revised manuscript's main
 biological analysis uses a separately sourced 15-gene signature.
 
-Open `examples/gse234933_quickstart.ipynb` with JupyterLab for a complete
+Download [the tutorial notebook](https://github.com/tjw0613-cell/pase-software/blob/v1.0.0/examples/gse234933_quickstart.ipynb)
+or clone the software repository. Open `examples/gse234933_quickstart.ipynb`
+with JupyterLab for a complete
 walkthrough of normalization metadata, exclusions, the three summaries,
 threshold sensitivity and saving results. After installation, that notebook
 needs neither network access nor a separate raw-data download.
