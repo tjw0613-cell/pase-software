@@ -1,0 +1,11 @@
+include LICENSE README.md CITATION.cff THIRD_PARTY_DATA.md
+include .readthedocs.yaml
+recursive-include src/pase/data *
+recursive-include docs *.md *.py
+recursive-include examples *.ipynb *.py
+recursive-include tests *.py
+recursive-include scripts *.py
+recursive-include .github/workflows *.yml
+global-exclude *.pyc
+global-exclude __pycache__
+

@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pase-framework"
+version = "1.0.0"
+description = "Patient-level association estimates for multi-patient single-cell studies"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE", "src/pase/data/*NOTICE*"]
+authors = [
+  {name = "Jinwei Tang"}, {name = "Yunfan Lin"}, {name = "Linrui Cai"},
+  {name = "Yali Wen"}, {name = "Guangyang Chen"}, {name = "Li Huang"}
+]
+keywords = ["single-cell", "association", "patient", "correlation", "meta-analysis"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+  "numpy>=1.24", "scipy>=1.10", "pandas>=2.0", "anndata>=0.10", "matplotlib>=3.7"
+]
+
+[project.urls]
+Source = "https://github.com/tjw0613-cell/pase-software"
+Issues = "https://github.com/tjw0613-cell/pase-software/issues"
+Reproduction = "https://github.com/tjw0613-cell/pase-reproducibility"
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+tutorial = ["jupyterlab>=4", "nbformat>=5", "nbclient>=0.10", "ipykernel>=6"]
+docs = ["sphinx>=7", "myst-parser>=3", "sphinx-rtd-theme>=3"]
+build = ["build>=1.2", "twine>=6"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+pase = ["data/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+

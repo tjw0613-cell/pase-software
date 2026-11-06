@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "accession": "GSE234933",
+  "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE234933",
+  "publication": {
+    "doi": "10.1126/science.ade2292",
+    "pmid": "37535729",
+    "citation": "Bill R, Wirapati P, Messemaker M, et al. CXCL9:SPP1 macrophage polarity identifies a network of cellular programs that control human cancers. Science. 2023;381:515-524."
+  },
+  "source_downloads": [
+    "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE234nnn/GSE234933/suppl/GSE234933_MGH_HNSCC_gex_raw_counts.tar.gz",
+    "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE234nnn/GSE234933/suppl/GSE234933_MGH_HNSCC_cell_annotation.txt.gz"
+  ],
+  "source_file_sha256": {
+    "GSE234933_MGH_HNSCC_cell_annotation.txt.gz": "b292d020d1388973785427ad50ed7cea7a77c0843b0753c4f2639788b3e307f9",
+    "HN1_gex_raw_counts.rds": "cd237cb588a11d8a4f27a99ec98c1821ed0f3745808105830faef1049d81eed8",
+    "HN13_gex_raw_counts.rds": "c17398031a5854217e13fec098efb3a71a543bce8c0b77579e65a2030ecfc071",
+    "HN14_gex_raw_counts.rds": "0c950f9ee6b183c421122209f9b85572291f1427525c774f3bb7954c180ab3c9",
+    "HN17_gex_raw_counts.rds": "1c42aa9725e0861b7c99060e8603c5e68cdfa9f960018369ac5a02bbfb5e19b9",
+    "HN2_gex_raw_counts.rds": "663dd8a0f213a377f337c01c36dc98f34fb3ee4edf9de8688391430e607e9f1f",
+    "HN20_gex_raw_counts.rds": "c0e5b4ee383bd76b289c4a237fd40ded830103efb354ad12586ab36c9ffec201",
+    "HN21_gex_raw_counts.rds": "053aec405221e480dae23267b0dab35c162875b5a7bde7719da29b5b4890e7a1",
+    "HN22_gex_raw_counts.rds": "be4bac053bd113bd895377643b5075bb07cb369988872a5f1535daa5f9eea771"
+  },
+  "source_dimensions": [
+    {
+      "specimen": "HN1",
+      "full_gene_count": 33514,
+      "annotated_myeloid_cells": 1377,
+      "positive_library_myeloid_cells": 1377,
+      "demo_cells": 100,
+      "raw_matrix_barcode_count": 164619
+    },
+    {
+      "specimen": "HN13",
+      "full_gene_count": 33514,
+      "annotated_myeloid_cells": 76,
+      "positive_library_myeloid_cells": 76,
+      "demo_cells": 76,
+      "raw_matrix_barcode_count": 134160
+    },
+    {
+      "specimen": "HN14",
+      "full_gene_count": 33514,
+      "annotated_myeloid_cells": 106,
+      "positive_library_myeloid_cells": 106,
+      "demo_cells": 100,
+      "raw_matrix_barcode_count": 147286
+    },
+    {
+      "specimen": "HN17",
+      "full_gene_count": 33514,
+      "annotated_myeloid_cells": 1509,
+      "positive_library_myeloid_cells": 1509,
+      "demo_cells": 100,
+      "raw_matrix_barcode_count": 305125
+    },
+    {
+      "specimen": "HN2",
+      "full_gene_count": 33514,
+      "annotated_myeloid_cells": 1592,
+      "positive_library_myeloid_cells": 1592,
+      "demo_cells": 100,
+      "raw_matrix_barcode_count": 221676
+    },
+    {
+      "specimen": "HN20",
+      "full_gene_count": 33514,
+      "annotated_myeloid_cells": 332,
+      "positive_library_myeloid_cells": 332,
+      "demo_cells": 100,
+      "raw_matrix_barcode_count": 143116
+    },
+    {
+      "specimen": "HN21",
+      "full_gene_count": 33514,
+      "annotated_myeloid_cells": 322,
+      "positive_library_myeloid_cells": 322,
+      "demo_cells": 100,
+      "raw_matrix_barcode_count": 223025
+    },
+    {
+      "specimen": "HN22",
+      "full_gene_count": 33514,
+      "annotated_myeloid_cells": 276,
+      "positive_library_myeloid_cells": 276,
+      "demo_cells": 100,
+      "raw_matrix_barcode_count": 95952
+    }
+  ],
+  "selection": {
+    "seed": 20261105,
+    "max_cells_per_specimen": 100,
+    "specimens": [
+      "HN1",
+      "HN13",
+      "HN14",
+      "HN17",
+      "HN2",
+      "HN20",
+      "HN21",
+      "HN22"
+    ],
+    "specimen_rule": "First eight lexicographically sorted specimen names, after excluding HN45; no effect-size selection.",
+    "cell_rule": "Author annotation subclustering == Myeloid cells; positive full library; lowest SHA256(seed|specimen|barcode) values; output sorted by barcode.",
+    "duplicate_donor_rule": "HN45 excluded because HN23 and HN45 are repeated specimens from one donor. Neither specimen is among the first eight selected specimens."
+  },
+  "normalization": "log1p(10000 * gene_count / sum(counts across all original genes)); no feature-selection denominator",
+  "log_depth": "log1p(sum(counts across all original genes))",
+  "n_cells": 776,
+  "n_donors": 8,
+  "n_genes": 19,
+  "genes": [
+    "LILRB4",
+    "MMP14",
+    "MMP9",
+    "SPP1",
+    "APOE",
+    "PCSK5",
+    "SLC11A1",
+    "VCAN",
+    "SLC25A37",
+    "FLNA",
+    "UPP1",
+    "BCL6",
+    "AQP9",
+    "TIMP1",
+    "VEGFA",
+    "ADM",
+    "MARCO",
+    "FN1",
+    "IL1RN"
+  ],
+  "spp1_tam_genes": [
+    "SPP1",
+    "PCSK5",
+    "SLC11A1",
+    "VCAN",
+    "SLC25A37",
+    "FLNA",
+    "UPP1",
+    "BCL6",
+    "AQP9",
+    "TIMP1",
+    "VEGFA",
+    "ADM",
+    "MARCO",
+    "FN1",
+    "IL1RN"
+  ],
+  "signature_source_doi": "10.3389/fimmu.2021.694801",
+  "interpretation": "Small real-data software tutorial; no claim to reproduce full-cohort manuscript results or to provide independent biological validation.",
+  "data_rights": "Third-party GEO-derived data; not relicensed under the package MIT License. Acknowledge GSE234933 and Bill et al.; see DATA_NOTICE.md and GEO data-use terms.",
+  "geo_use_terms": "https://www.ncbi.nlm.nih.gov/geo/info/disclaimer.html",
+  "outputs_sha256": {
+    "gse234933_demo.npz": "341b50a7da116b087abede8f28f429bcd63619b4b84bb23e36570ff98f06e5f7",
+    "gse234933_demo_obs.tsv": "e1487e53d4678e2fc1d02464109a57e4adbed87eb2d864326bc27870d2db819b"
+  },
+  "builder_sha256": "cf732484f399007f4e69b711ca776231e44595aee23415ce78e5baf50e39756a"
+}

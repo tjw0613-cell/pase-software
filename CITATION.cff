@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "Please cite this software and the version-specific release URL or DOI accompanying the version used."
+type: software
+title: "PASE: patient-level association estimation"
+version: 1.0.0
+repository-code: "https://github.com/tjw0613-cell/pase-software"
+authors:
+  - family-names: Tang
+    given-names: Jinwei
+  - family-names: Lin
+    given-names: Yunfan
+  - family-names: Cai
+    given-names: Linrui
+  - family-names: Wen
+    given-names: Yali
+  - family-names: Chen
+    given-names: Guangyang
+  - family-names: Huang
+    given-names: Li
+license: MIT
+abstract: "Software for within-patient molecular associations and equal-patient, random-effects, or individual shrinkage summaries."
+
