@@ -10,6 +10,7 @@ reports the statistical target of each summary.
 quickstart
 inputs
 statistics
+reporting-policy
 api
 outputs
 reproducibility

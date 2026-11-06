@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 from scipy import sparse
 
+from ._reporting import DEFAULT_MIN_PATIENTS, add_reporting, validate_planning
 from ._statistics import summarize_patients
 from .result import AssociationResult
 
@@ -153,8 +154,10 @@ def _patient_effect(pid, indices, mask, expression, covariate_values, module, mi
 
 
 def associate(adata, anchor, target, patient_key, covariates=None, cell_mask=None,
-              aggregate="equal", min_cells=30, min_patients=2, layer=None,
-              alpha=0.05, patient_ids=None):
+              aggregate="equal", min_cells=30, min_patients=DEFAULT_MIN_PATIENTS, layer=None,
+              alpha=0.05, patient_ids=None, *, max_ci_width=0.2,
+              minimum_relevant_effect=None, planning_sd=None, planning_power=0.8,
+              planning_sd_source=None):
     """Estimate an association within each patient and summarize across patients.
 
     Parameters
@@ -185,9 +188,11 @@ def associate(adata, anchor, target, patient_key, covariates=None, cell_mask=Non
     min_cells : int, default 30
         Minimum complete cells for patient eligibility. Regardless of this
         setting, at least three residual degrees of freedom are required.
-    min_patients : int, default 2
-        Minimum eligible patients before inference is returned. Two is only a
-        mathematical minimum, not an empirically validated adequacy threshold.
+    min_patients : int, default 6
+        Minimum method-specific eligible patients before inference is returned.
+        Below this floor, only raw effects and descriptive summaries are returned.
+        Values from two to five are expert overrides and generate a warning.
+        Six is a reporting policy, not a validated adequacy threshold.
     layer : str, optional
         Transformed-expression layer instead of X. ``adata.raw`` is not used.
     alpha : float, default 0.05
@@ -195,6 +200,25 @@ def associate(adata, anchor, target, patient_key, covariates=None, cell_mask=Non
     patient_ids : sequence, optional
         Additional patient IDs to retain even if they have no observed cells.
         Observed IDs are always retained. Output IDs are strings.
+    max_ci_width : float or None, keyword-only, default 0.2
+        Warn when an available cohort interval exceeds this correlation-scale
+        width. Must be positive and finite; None disables this warning. The
+        interval is never changed or suppressed by this preference.
+    minimum_relevant_effect : float, optional, keyword-only
+        Relevant absolute mean correlation, in (0, 1]. Requires planning_sd.
+        Warn when it is smaller than the model-based planning MDE.
+    planning_sd : float, optional, keyword-only
+        Externally assumed SD of patient correlations, in (0, 1]. Enables a
+        two-sided noncentral-t MDE calculation for equal aggregation only.
+        It is never estimated from the input cohort. Below min_patients the
+        calculation is withheld; re_hksj and eb return not_supported.
+    planning_power : float, keyword-only, default 0.8
+        Desired planning power, strictly between zero and one. When planning_sd
+        is provided, it must also exceed alpha.
+    planning_sd_source : str, optional, keyword-only
+        User-declared source of planning_sd, such as an independent pilot cohort.
+        The software records but cannot verify it. Providing an SD without a
+        source generates a warning. A source requires planning_sd.
 
     Returns
     -------
@@ -209,11 +233,21 @@ def associate(adata, anchor, target, patient_key, covariates=None, cell_mask=Non
     to design rank minus one; its independent-cell assumptions may not hold for
     all single-cell data. Raw patient correlations remain visible when cohort
     inference is withheld. Inputs are not modified.
+
+    Reported inference below 20 eligible patients carries a risk warning;
+    reaching 20 does not guarantee calibration. MDE is a planning quantity under
+    independent, identically distributed normal patient effects with the supplied
+    SD. It is not a retrospective power estimate or a count-data power guarantee.
+    See result.metadata for the scope of the simulation-informed reporting policy.
     """
     min_cells = _integer(min_cells, "min_cells", 1)
     min_patients = _integer(min_patients, "min_patients", 2)
     if isinstance(alpha, (bool, np.bool_)) or not isinstance(alpha, Real) or not 0 < alpha < 1:
         raise ValueError("alpha must be a finite number strictly between zero and one.")
+    (max_ci_width, minimum_relevant_effect, planning_sd,
+     planning_power, planning_sd_source) = validate_planning(
+        max_ci_width, minimum_relevant_effect, planning_sd, planning_power, float(alpha),
+        planning_sd_source)
     if aggregate not in ("equal", "re_hksj", "eb"):
         raise ValueError("aggregate must be 'equal', 're_hksj', or 'eb'.")
     if not all(hasattr(adata, attr) for attr in ("obs", "var_names", "X", "layers")):
@@ -365,4 +399,8 @@ def associate(adata, anchor, target, patient_key, covariates=None, cell_mask=Non
                     eb_interval_interpretation="conditional plug-in intervals, holding fitted population parameters fixed; no cohort inference",
                     interval_method="Student t" if aggregate == "equal" else "REML with classical HKSJ" if aggregate == "re_hksj" else "conditional empirical Bayes",
                     patient_id_order="first observed, then additional patient_ids")
+    add_reporting(summary, patients, metadata, max_ci_width=max_ci_width,
+                  minimum_relevant_effect=minimum_relevant_effect,
+                  planning_sd=planning_sd, planning_power=planning_power,
+                  planning_sd_source=planning_sd_source)
     return AssociationResult(patients, summary, metadata)

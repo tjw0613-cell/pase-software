@@ -1,22 +1,21 @@
 # Maintainer release instructions
 
-## Release status
+## Release records
 
-Version 1.0.0 is published on
-[PyPI](https://pypi.org/project/pase-framework/1.0.0/) and
-[GitHub](https://github.com/tjw0613-cell/pase-software/releases/tag/v1.0.0).
-The [publication workflow](https://github.com/tjw0613-cell/pase-software/actions/runs/42162951531)
-passed its cross-platform checks and PyPI upload. A separate Windows environment
-installed the public PyPI wheel and ran the equal, RE-HKSJ and EB examples.
-The [online documentation](https://pase-software.readthedocs.io/en/latest/)
-is published on Read the Docs. Its `latest` version tracks the `main` branch.
-A Bioconda package has not yet been published. Never commit API tokens.
+Version 1.1.0 changes reporting defaults and adds precision warnings and a
+model-based planning MDE. See [the changelog](https://github.com/tjw0613-cell/pase-software/blob/v1.1.0/CHANGELOG.md)
+and [reporting policy](reporting-policy.md) before upgrading an existing workflow.
+Release artifacts are indexed on [PyPI](https://pypi.org/project/pase-framework/1.1.0/)
+and [GitHub](https://github.com/tjw0613-cell/pase-software/releases/tag/v1.1.0).
+Check the actual [release workflow results](https://github.com/tjw0613-cell/pase-software/actions/workflows/publish.yml)
+for cross-platform tests and upload status; the configuration alone is not proof
+that a run passed.
 
 The software repository is `tjw0613-cell/pase-software`; the manuscript
-repository is `tjw0613-cell/pase-reproducibility`.
-Keep each checkout in its own repository. The documentation URL is recorded
-in `pyproject.toml`; published PyPI 1.0.0 metadata remains unchanged.
-Do not reuse the earlier manuscript archive DOI as this version's software DOI.
+repository is `tjw0613-cell/pase-reproducibility`. A Bioconda package has not
+been published. The earlier manuscript archive DOI and the simulation protocol
+DOI do not identify this software version. Never commit API tokens or move an
+existing published release tag.
 
 ## Build and check
 
@@ -51,7 +50,7 @@ verify the project page, download the published distribution and repeat the
 five-line example in a fresh environment using:
 
 ```bash
-python -m pip install pase-framework==1.0.0
+python -m pip install pase-framework==1.1.0
 ```
 
 Repeat the clean installation check for each future version before updating

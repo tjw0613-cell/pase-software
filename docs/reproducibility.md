@@ -34,7 +34,17 @@ raises an error.
 
 In the separate repository, `python reproduce.py fig2` is a portable equivalent
 of `make fig2`. Each figure command documents whether it recreates a plot from
-archived summary inputs or repeats the upstream analysis. Missing formal
-simulation results are reported as missing, not replaced by synthetic charts.
+archived summary inputs or repeats the upstream analysis. Figure inputs must match the manuscript revision being reproduced. The
+software release and teaching subset do not bundle the full formal simulation
+archive. A missing input is reported as missing, not replaced by a synthetic chart.
 The bundled notebook does not reproduce all manuscript results.
 
+
+## Reporting-policy evidence
+
+The 1.1.0 policy was developed after examining the completed unified count
+simulation: 293 conditions and 3,302,000 study cohorts. The archived protocol
+is [version 2.0.0](https://doi.org/10.5281/zenodo.24010816). That DOI identifies
+the protocol, not the subsequently generated results or an independent
+validation of the software defaults. See [Reporting policy](reporting-policy.md)
+for the distinction between a reporting choice and a calibrated recommendation.

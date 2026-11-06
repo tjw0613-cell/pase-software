@@ -24,7 +24,7 @@ def fixture_data(n=40, patients=5):
 
 def test_equal_matches_manual_partial_correlation_and_t():
     adata = fixture_data()
-    out = pase.associate(adata, "A", "B", "donor", covariates=["log_depth"])
+    out = pase.associate(adata, "A", "B", "donor", covariates=["log_depth"], min_patients=2)
     expected = []
     for pid in adata.obs.donor.unique():
         selected = adata.obs.donor == pid
@@ -63,12 +63,12 @@ def test_module_standardized_before_covariate_missingness():
 
 def test_equal_invariant_to_exact_donor_cell_duplication():
     adata = fixture_data()
-    one = pase.associate(adata, "A", ["B", "C"], "donor", covariates=["log_depth"])
+    one = pase.associate(adata, "A", ["B", "C"], "donor", covariates=["log_depth"], min_patients=2)
     selected = np.concatenate([np.arange(adata.n_obs), np.tile(np.arange(40), 9)])
     with pytest.warns(UserWarning, match="Observation names are not unique"):
         duplicated = adata[selected].copy()
     duplicated.obs_names = [f"dup{i}" for i in range(duplicated.n_obs)]
-    two = pase.associate(duplicated, "A", ["B", "C"], "donor", covariates=["log_depth"])
+    two = pase.associate(duplicated, "A", ["B", "C"], "donor", covariates=["log_depth"], min_patients=2)
     np.testing.assert_allclose(one.patients.r, two.patients.r, atol=1e-13)
     np.testing.assert_allclose(one.summary()[["estimate", "ci_low", "ci_high"]],
                                two.summary()[["estimate", "ci_low", "ci_high"]], atol=1e-13)
@@ -109,7 +109,7 @@ def test_retains_masked_out_absent_and_below_threshold_patients():
 
 def test_re_hksj_matches_manual_two_patient_fit():
     adata = fixture_data(patients=2)
-    out = pase.associate(adata, "A", "B", "donor", aggregate="re_hksj")
+    out = pase.associate(adata, "A", "B", "donor", aggregate="re_hksj", min_patients=2)
     z = np.arctanh(out.patients.r.to_numpy())
     v = 1 / 37
     tau = max(0., ((z[0] - z[1]) ** 2 - 2 * v) / 2)
@@ -138,7 +138,7 @@ def test_fisher_boundary_kept_for_equal_only():
 
 def test_eb_has_no_group_inference_and_policy_suppresses_fit():
     adata = fixture_data()
-    out = pase.associate(adata, "A", "B", "donor", aggregate="eb")
+    out = pase.associate(adata, "A", "B", "donor", aggregate="eb", min_patients=2)
     summary = out.summary().iloc[0]
     assert pd.isna(summary.estimate)
     assert pd.isna(summary.ci_low)
@@ -155,7 +155,7 @@ def test_zero_heterogeneity_eb_has_no_false_intervals():
     adata = fixture_data()
     for start in range(40, adata.n_obs, 40):
         adata.X[start:start + 40] = adata.X[:40]
-    out = pase.associate(adata, "A", "B", "donor", aggregate="eb")
+    out = pase.associate(adata, "A", "B", "donor", aggregate="eb", min_patients=2)
     assert out.patients.eb_estimate.notna().all()
     assert out.patients.eb_ci_low.isna().all()
     assert (out.patients.eb_status == "zero_tau2_complete_pooling").all()

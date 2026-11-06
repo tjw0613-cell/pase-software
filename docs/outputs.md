@@ -15,11 +15,36 @@
 | `df` | Degrees of freedom used by the interval. |
 | `tau2` | Estimated between-patient variance on the Fisher-z scale; not applicable to equal-r summaries. |
 | `status`, `reason` | Whether inference was returned and why it was withheld. |
+| `reporting_status`, `inference_available` | Descriptive, cohort-inferential or individual-EB reporting; availability refers only to cohort inference. |
+| `descriptive_mean_r`, `descriptive_median_r` | Unshrunk correlations among patients eligible for the selected method, even when inference is withheld. |
+| `n_positive`, `n_negative`, `n_zero` | Direction counts in that same eligible set. All other observed correlations remain in the patient table. |
+| `warning_codes` | Machine-readable cautions; the complete explanations are in `metadata["warnings"]`. |
+| `ci_width` | Full displayed correlation-scale cohort interval width; NaN if no cohort interval is returned. |
+| `planning_mde`, `mde_status`, `mde_attainable` | External-SD equal-r planning calculation, its availability, and whether its magnitude is at most one. This is not achieved power or a full bounded-distribution feasibility check. |
 
 Status `reported` denotes a computed interval, not demonstrated reliability.
 `withheld_policy` means the selected patient threshold was not met.
 `withheld_technical` means an interval was not mathematically estimable.
 `individual_estimates_only` marks EB mode.
+
+`reporting_status` uses `descriptive_only`, `inferential`,
+`inferential_with_warnings`, `individual_estimates_only` or
+`individual_estimates_with_warnings`. Even `inferential` does not certify
+calibration; `metadata["calibration_guaranteed"]` is always false.
+
+MDE status is `not_requested`, `withheld_policy`, `not_supported`,
+`numerical_failure` or `model_based_planning`. A planning result can be
+available with `inference_available=False` when the external planning inputs
+are usable but the observed-data interval is technically undefined.
+
+The principal warning codes are `below_min_patients`,
+`below_default_min_patients`, `small_cohort_calibration_warning`,
+`wide_interval`, `weighted_aggregation_assumptions`,
+`fisher_variance_approximation`, `eb_conditional_uncertainty`,
+`inference_unavailable`, `planning_sd_source_unspecified`,
+`model_based_power_warning`, `mde_exceeds_correlation_range`,
+`mde_not_supported` and `mde_numerical_failure`.
+See [Reporting policy](reporting-policy.md) for their scope.
 
 ## Patient table
 

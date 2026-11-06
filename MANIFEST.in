@@ -1,7 +1,7 @@
-include LICENSE README.md CITATION.cff THIRD_PARTY_DATA.md
+include LICENSE README.md CITATION.cff THIRD_PARTY_DATA.md CHANGELOG.md
 include .readthedocs.yaml
 recursive-include src/pase/data *
-recursive-include docs *.md *.py
+recursive-include docs *.md *.rst *.py
 recursive-include examples *.ipynb *.py
 recursive-include tests *.py
 recursive-include scripts *.py

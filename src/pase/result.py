@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from textwrap import fill
 
 import numpy as np
 import pandas as pd
@@ -28,6 +29,10 @@ class AssociationResult:
         ``status`` and ``reason`` distinguish technical failure, a user-selected
         patient threshold, and an available interval. An EB analysis has no
         cohort estimate, confidence interval or P value in this table.
+        ``inference_available`` refers to cohort inference; EB uncertainty is
+        conditional. Descriptive fields refer to method-eligible raw effects.
+        ``warning_codes`` and ``reporting_status`` qualify available estimates;
+        no status certifies calibration. MDE fields are model-based planning.
         """
         return pd.DataFrame([deepcopy(self._summary)])
 
@@ -39,7 +44,7 @@ class AssociationResult:
         ax : matplotlib.axes.Axes, optional
             Axes to draw on. A new figure is created if omitted.
         title : str, optional
-            Override the automatically generated title.
+            Override the main title. Withholding and caution notes remain.
         include_excluded : bool, default True
             Show excluded patient names with their exclusion reasons.
 
@@ -83,12 +88,27 @@ class AssociationResult:
         ax.set_yticks(np.arange(len(labels)), labels=labels)
         ax.set_ylim(len(labels) - 0.4, -0.8)
         ax.set_xlabel("Patient-level correlation")
-        default_title = f"{self.metadata['anchor']} and {self.metadata['target_label']}"
-        if is_eb:
-            default_title += "\nEB diamonds; conditional intervals; grey observed effects"
+        plot_title = title if title is not None else f"{self.metadata['anchor']} and {self.metadata['target_label']}"
+        has_individual = is_eb and self._summary["status"] == "individual_estimates_only"
+        if has_individual:
+            plot_title += "\nEB diamonds; conditional intervals; grey observed effects"
         elif not has_summary:
-            default_title += "\nCohort inference withheld: " + self._summary["reason"].replace("_", " ")
-        ax.set_title(title if title is not None else default_title)
+            plot_title += "\nInference withheld: " + self._summary["reason"].replace("_", " ")
+        if has_summary or has_individual:
+            codes = self._summary.get("warning_codes", ())
+            labels_by_code = {
+                "below_default_min_patients": "expert override",
+                "small_cohort_calibration_warning": "small cohort",
+                "wide_interval": "wide interval",
+                "model_based_power_warning": "planning power below target",
+                "mde_exceeds_correlation_range": "MDE exceeds one",
+            }
+            cautions = [labels_by_code[code] for code in codes if code in labels_by_code]
+            if cautions:
+                plot_title += "\nCaution: " + "; ".join(cautions)
+            elif codes:
+                plot_title += "\nCaution: see result metadata for assumptions"
+        ax.set_title("\n".join(fill(line, width=65) for line in plot_title.splitlines()))
         for side in ("top", "right"):
             ax.spines[side].set_visible(False)
         ax.grid(axis="x", color="#dddddd", lw=0.5)

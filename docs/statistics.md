@@ -82,17 +82,20 @@ contains no cohort estimate, cohort confidence interval or P value for this mode
 
 ## Reporting policy
 
-`min_patients` controls when cohort inference is returned. The default of two
-is a computability limit, not a recommendation. If fewer patients pass the
-selected method's rules, the summary has status `withheld_policy` and its
-estimate, interval and P value are missing. Individual observed correlations
-and exclusion counts remain available. A stricter threshold must be justified
-for the study rather than inferred from a software default.
+The default `min_patients=6` is a reporting floor applied after method-specific
+eligibility checks. Below it, patient correlations and descriptive summaries
+remain available, while inferential quantities are withheld. The result-informed
+policy and its limitations are detailed in [Reporting policy](reporting-policy.md).
+Small-cohort and wide-interval warnings do not remove otherwise computable
+intervals. Passing either check does not establish calibration.
 
-This release does not implement a validated patient-count decision tree,
-automatic minimum detectable effect rules, or a prediction interval. Those
-features require separate scientific validation before they can be presented
-as calibrated guidance. The package also does not adjust across multiple
-calls: if testing many associations, define the testing family and apply the
-chosen multiplicity correction separately.
+For the equal-patient mean only, a supplied external `planning_sd` enables a
+two-sided noncentral-t MDE calculation at the requested `alpha` and
+`planning_power`. This assumes independent normally distributed patient effects
+with the specified planning SD. It does not estimate achieved power from the
+observed effect, guarantee power under mixture distributions, or support the
+Fisher-z or EB target. The API does not provide a prediction interval.
 
+The package does not adjust across multiple calls: when testing many
+associations, define the testing family and apply the selected multiplicity
+correction separately.
