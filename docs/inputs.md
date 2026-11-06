@@ -62,8 +62,8 @@ The order is fixed:
 No outcome-detection gate is applied. The input function accepts numeric
 covariates, including explicit dummy variables, but does not encode categories.
 Within each patient's complete cases, nuisance columns are centered and scaled
-for numerical stability, and constant columns are omitted alongside the
-intercept. Rank-deficient designs use their numerical rank. Nonfinite values are counted
+for numerical stability. Constant nuisance columns are omitted; the intercept
+is retained. Rank-deficient designs use their numerical rank. Nonfinite values are counted
 in the patient output instead of being silently replaced with zero.
 
 ## Eligibility
