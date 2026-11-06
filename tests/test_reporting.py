@@ -87,7 +87,9 @@ def test_width_threshold_warns_without_changing_inference():
     assert 'wide_interval' not in one.warning_codes
     assert 'wide_interval' in two.warning_codes
     for k in ('estimate', 'ci_low', 'ci_high', 'p_value', 'standard_error'):
-        assert one[k] == two[k]
+        # Independent linear-algebra calls can differ by a few ulps across
+        # BLAS implementations; a reporting preference must not alter the fit.
+        assert one[k] == pytest.approx(two[k], rel=1e-13, abs=5e-15)
 
 
 def test_noncentral_t_mde_matches_independent_power_equation():
