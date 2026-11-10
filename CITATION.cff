@@ -2,8 +2,9 @@ cff-version: 1.2.0
 message: "Please cite this software and the version-specific release URL or DOI accompanying the version used."
 type: software
 title: "PASE: patient-level association estimation"
-version: 1.1.0
+version: 1.1.1
 repository-code: "https://github.com/tjw0613-cell/pase-software"
+url: "https://github.com/tjw0613-cell/pase-software/releases/tag/v1.1.1"
 authors:
   - family-names: Tang
     given-names: Jinwei

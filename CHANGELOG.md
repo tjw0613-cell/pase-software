@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.1
+
+- Corrected the environment commands for Windows, macOS and Linux.
+- Made README links work on PyPI and added a saved-plot example.
+- Linked the software, simulation protocol, core results and manuscript
+  reproduction workflow, with the later supplementary analyses listed separately.
+- Clarified categorical inputs and the four-gene teaching example versus the
+  manuscript's 15-gene workflow.
+- This documentation and packaging update leaves the statistical calculations,
+  reporting defaults and bundled data unchanged from 1.1.0. The manuscript
+  analyses used 1.1.0.
+
 ## 1.1.0
 
 - Changed the default reporting floor from two to six method-eligible patients.

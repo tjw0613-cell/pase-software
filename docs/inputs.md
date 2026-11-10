@@ -61,6 +61,8 @@ The order is fixed:
 
 No outcome-detection gate is applied. The input function accepts numeric
 covariates, including explicit dummy variables, but does not encode categories.
+For a categorical covariate, create numeric dummy variables with a reference
+category. Passing integer labels such as 0, 1 and 2 instead fits a numeric trend.
 Within each patient's complete cases, nuisance columns are centered and scaled
 for numerical stability. Constant nuisance columns are omitted; the intercept
 is retained. Rank-deficient designs use their numerical rank. Nonfinite values are counted

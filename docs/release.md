@@ -2,11 +2,15 @@
 
 ## Release records
 
+Version 1.1.1 corrects documentation and packaging. Statistical code, reporting
+defaults and bundled data are unchanged from 1.1.0, the version used for the
+manuscript analyses.
+
 Version 1.1.0 changes reporting defaults and adds precision warnings and a
-model-based planning MDE. See [the changelog](https://github.com/tjw0613-cell/pase-software/blob/v1.1.0/CHANGELOG.md)
+model-based planning MDE. See [the changelog](https://github.com/tjw0613-cell/pase-software/blob/v1.1.1/CHANGELOG.md)
 and [reporting policy](reporting-policy.md) before upgrading an existing workflow.
-Release artifacts are indexed on [PyPI](https://pypi.org/project/pase-framework/1.1.0/)
-and [GitHub](https://github.com/tjw0613-cell/pase-software/releases/tag/v1.1.0).
+Release artifacts are indexed on [PyPI](https://pypi.org/project/pase-framework/1.1.1/)
+and [GitHub](https://github.com/tjw0613-cell/pase-software/releases/tag/v1.1.1).
 Check the actual [release workflow results](https://github.com/tjw0613-cell/pase-software/actions/workflows/publish.yml)
 for cross-platform tests and upload status; the configuration alone is not proof
 that a run passed.
@@ -29,9 +33,11 @@ python -m twine check dist/*
 ```
 
 Inspect the actual GitHub Actions results on Linux, macOS and Windows. Fix
-failures before tagging a release. For a future version, update both package
-metadata and `pase.__version__`, then use the matching GitHub version tag.
-Do not move the published `v1.0.0` tag or replace its distributions.
+failures before tagging a release. For a future version, update `pyproject.toml`,
+`pase.__version__` and `CITATION.cff`, then use the matching GitHub version tag.
+Keep installation commands, release links and the changelog consistent with
+the version being published. Do not move an existing published tag or replace
+its distributions.
 
 ## PyPI
 
@@ -47,15 +53,22 @@ The manual **Publish release** workflow uploads to TestPyPI. A **published
 GitHub release** triggers the same tests and then uploads to PyPI. The publisher
 uses OIDC, not a password stored in the repository. After public upload,
 verify the project page, download the published distribution and repeat the
-five-line example in a fresh environment using:
+quick example in a fresh environment using:
 
 ```bash
-python -m pip install pase-framework==1.1.0
+python -m pip install pase-framework==1.1.1
 ```
 
 Repeat the clean installation check for each future version before updating
 its installation instructions. See the official
 [Trusted Publisher guide](https://docs.pypi.org/trusted-publishers/using-a-publisher/).
+
+PyPI displays the README packaged with a release. Editing the GitHub README
+does not update an already published distribution. A documentation-only patch
+release can carry corrected instructions without changing statistical code;
+state that scope in its changelog and retain the earlier release. PyPI does
+not allow an existing distribution filename to be reused. See
+[PyPI upload troubleshooting](https://docs.pypi.org/publishing/troubleshooting/).
 
 ## Read the Docs
 

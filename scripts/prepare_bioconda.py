@@ -12,7 +12,7 @@ import tarfile
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 
 
 def main():
